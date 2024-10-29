@@ -8,6 +8,7 @@ use reqwest::Url;
 
 
 
+
 #[tokio::test]
 async fn should_return_400_if_jwt_cookie_is_missing() {
     let app = TestApp::new().await;
@@ -102,10 +103,25 @@ async fn should_return_200_if_valid_jwt_cookie() {
 
     assert!(!auth_cookie.value().is_empty());
 
+    let token = auth_cookie.value();
+
 
     let response = app.post_logout().await;
 
     assert_eq!(response.status().as_u16(), 200);
+
+    let auth_cookie = response.cookies()
+    .find(|c| c.name() == JWT_COOKIE_NAME).expect("No auth cookie found");
+
+    assert!(auth_cookie.value().is_empty());
+
+    let banned_token_store = app.banned_token_store.read().await;
+    let is_banned_token  = banned_token_store
+        .is_banned(token)
+        .await
+        .expect("Failed to check if token is banned");
+
+    assert!(is_banned_token);
 
 }
 
