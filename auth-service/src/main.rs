@@ -1,6 +1,6 @@
 //use axum::{response::Html, routing::get, Router};
 //use tower_http::services::ServeDir;
-use auth_service::Application;
+use auth_service::{Application,utils::constants::prod};
 use auth_service::app_state::AppState;
 use auth_service::services::*;
 use std::sync::Arc;
@@ -16,7 +16,7 @@ async fn main() {
 
     let user_store = Arc::new(RwLock::new(HashmapUserStore::default()));
     let app_state = AppState::new(user_store);
-    let app = Application::build(app_state ,"0.0.0.0:3000")
+    let app = Application::build(app_state , prod::APP_ADDRESS)
         .await
         .expect("Failed to build app");
     // Here we are using ip 0.0.0.0 so the service is listening on all the configured network interfaces.

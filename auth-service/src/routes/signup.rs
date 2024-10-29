@@ -1,7 +1,7 @@
 use axum::{extract::State,http::StatusCode, response::IntoResponse, Json};
 use serde::{Deserialize, Serialize};
 use crate::{app_state::AppState, domain::{User,AuthAPIError,Email,Password}};   
-use std::sync::Arc;
+//use std::sync::Arc;
 
 /*pub async fn signup( Json(request): Json<SignupRequest>) -> impl IntoResponse {
     StatusCode::OK.into_response()

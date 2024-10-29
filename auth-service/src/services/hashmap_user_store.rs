@@ -133,7 +133,7 @@ mod tests {
             password: Password::parse("password".to_owned()).unwrap(),
             requires_2fa: false,    
     };
-    user_store.add_user(user.clone()).await;
+    let _ = user_store.add_user(user.clone()).await;
     let result = user_store.get_user(&user.email).await;
     assert_eq!(result, Ok(user));
 
@@ -144,7 +144,7 @@ mod tests {
 
     }
 
-    
+
     #[tokio::test]
    async fn test_validate_user() {
         let mut user_store = HashmapUserStore::default();
@@ -153,7 +153,7 @@ mod tests {
             password: Password::parse("password".to_owned()).unwrap(),
             requires_2fa: false,
     };
-    user_store.add_user(user.clone()).await;
+    let _ = user_store.add_user(user.clone()).await;
     let result = user_store.validate_user(&user.email, &user.password).await;
     assert_eq!(result, Ok(()));
     }
