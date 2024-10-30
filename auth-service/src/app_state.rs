@@ -3,7 +3,8 @@ use tokio::sync::RwLock;
 
 //use crate::services::hashmap_user_store::HashmapUserStore;
 //use crate::services::hashmap_user_store::HashmapUserStore;
-use crate::domain::{UserStore,BannedTokenStore};
+use crate::domain::{BannedTokenStore, TwoFACodeStore, UserStore};
+
 
 
 // Using a type alias to improve readability!
@@ -11,16 +12,18 @@ use crate::domain::{UserStore,BannedTokenStore};
 //make it a generic  userstoretype
 pub type UserStoreType = Arc<RwLock<dyn UserStore + Send + Sync>>;  
 pub type BannedTokenStoreType = Arc<RwLock<dyn BannedTokenStore + Send + Sync>>; 
+pub type TwoFACodeStoreType = Arc<RwLock<dyn TwoFACodeStore + Send + Sync>>;
 //pub type UserStoreType = 
 
 #[derive(Clone)]
 pub struct AppState {
     pub user_store: UserStoreType,
     pub banned_token_store: BannedTokenStoreType,
+    pub two_fa_code_store: TwoFACodeStoreType,
 }
 
 impl AppState {
-    pub fn new(user_store: UserStoreType, banned_token_store: BannedTokenStoreType) -> Self {
-        Self { user_store, banned_token_store }
+    pub fn new(user_store: UserStoreType, banned_token_store: BannedTokenStoreType,two_fa_code_store: TwoFACodeStoreType) -> Self {
+        Self { user_store, banned_token_store , two_fa_code_store}
     }
 }
