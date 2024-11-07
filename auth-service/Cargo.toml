@@ -27,5 +27,6 @@ chrono = "0.4.35"
 dotenvy = "0.15.7"
 lazy_static = "1.4.0"
 tower-http = { version = "0.5.0", features = ["fs", "cors"] }
+rand = "0.8.5"
 
 
